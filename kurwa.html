@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dear Maja</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #b0b0b0;
+            font-family: Arial, sans-serif;
+            transition: background 0.5s ease;
+            overflow: hidden;
+            flex-direction: column;
+            position: relative;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        #bienvenida {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #titulo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: purple;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+        }
+        #cofre {
+            width: 150px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-top: 50px;
+        }
+        #cofre:hover {
+            transform: scale(1.1);
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-5px); }
+            40% { transform: translateX(5px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #4B0082; /* Morado oscuro especial */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        #dog-gif {
+            width: 200px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            margin-bottom: 20px;
+        }
+        #mensaje-flor {
+            font-size: 24px;
+            font-family: 'Press Start 2P', cursive;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+        #flor {
+            width: 200px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            margin-top: 20px;
+        }
+        #mensaje-pequeno {
+            font-size: 12px;
+            font-family: 'Press Start 2P', cursive;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="login">
+        <h2>Write your name</h2>
+        <input type="text" id="nombre" placeholder="Your name">
+        <button onclick="validarNombre()">Send</button>
+        <p id="mensaje" style="color:red;"></p>
+    </div>
+    
+    <div class="hidden" id="bienvenida">
+        <p id="titulo">Hi hermosa<br><br>Touch the chest to see what's inside</p>
+        <img id="cofre" src="cofre.png" onclick="abrirCofre()">
+    </div>
+
+    <div id="overlay">
+        <img id="dog-gif" src="dog-happy.gif">
+        <p id="mensaje-flor">Happy Women's Day to my Polish woman.<br>Muak</p>
+        <img id="flor" src="flor.png">
+        <p id="mensaje-pequeno">Since I'm not there, that's the least I can do for you, mi amor.</p>
+    </div>
+
+    <script>
+        function validarNombre() {
+            const nombre = document.getElementById("nombre").value.trim();
+            if (nombre.toLowerCase() === "maya" || nombre.toLowerCase() === "maja") {
+                document.getElementById("login").classList.add("hidden");
+                document.body.style.background = "url('fondo.jpg') no-repeat center center fixed";
+                document.body.style.backgroundSize = "cover";
+                document.body.style.filter = "brightness(50%)";
+                document.getElementById("bienvenida").classList.remove("hidden");
+            } else {
+                document.getElementById("mensaje").innerText = "If you are not my polka, go fuck your self";
+            }
+        }
+
+        function abrirCofre() {
+            const cofre = document.getElementById("cofre");
+
+            // Efecto de temblor
+            cofre.style.animation = "shake 0.5s";
+
+            // Esperar a que termine el temblor y activar la siguiente pantalla
+            setTimeout(() => {
+                cofre.style.animation = ""; // Detener el temblor
+                const overlay = document.getElementById("overlay");
+                overlay.style.visibility = "visible";
+                overlay.style.opacity = "1";
+
+                setTimeout(() => {
+                    document.getElementById("dog-gif").style.opacity = "1";
+                    document.getElementById("mensaje-flor").style.opacity = "1";
+                    document.getElementById("flor").style.opacity = "1";
+                    document.getElementById("mensaje-pequeno").style.opacity = "1";
+                }, 1000);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
